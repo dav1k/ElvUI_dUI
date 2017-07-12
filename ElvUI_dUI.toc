@@ -1,0 +1,10 @@
+## Interface: 70200
+## Author: Davik
+## Version: 0.1
+## Title: ## Title: |cff1784d1ElvUI|r |cffb342f4dUI|r
+## Notes: My custom plugin for ElvUI
+## RequiredDeps: ElvUI
+
+ElvUI_dUI.lua
+core\load_core.xml
+modules\load_modules.xml
