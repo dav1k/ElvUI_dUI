@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI); -- Imports
+local E, L, V, P, G = unpack(ElvUI) -- Imports
+local dUI = E:GetModule('dUI')
 local DT = E:GetModule('DataTexts') -- Grab ElvUI DataTexts
 
 -- Cache Globals
@@ -133,7 +134,7 @@ local function OnEvent(self)
       lootIcon = ''
     end
   else
-    local _, name, _, texture = GetSpecializationInfoByID(specialization)
+    local _, name, _, texture = GetSpecializationInfoByID(lootSpec)
 
     if name then
       loot = format('%s', abbrPlayerSpecs[name])
@@ -191,9 +192,9 @@ local function OnClick(self, button)
   if button == 'LeftButton' then
     DT.tooltip:Hide()
 
-    if not PlayerTalentFrame then
-      loadAddon('Blizzard_TalentUI')
-    end
+		if not PlayerTalentFrame then
+			LoadAddOn("Blizzard_TalentUI")
+		end
 
     for index = 1, 4 do
       local id, name, _, texture = GetSpecializationInfo(index)
