@@ -21,19 +21,19 @@ function dUI:ReadableNumber(v, digits, lower)
 	else
     v = abs(v)
     local str = ''
-    if v >= 100e9 then
+    if v >= 100e9 then      -- 100.0B
       str = format('%sB', FormatToDecimalsPlaces(v/1e9, digits or 1))
-    elseif v >= 1e9 then
+    elseif v >= 1e9 then    -- 1.00B
       str = format('%sB', FormatToDecimalsPlaces(v/1e9, digits or 2))
-    elseif v >= 100e6 then
+    elseif v >= 100e6 then  -- 100.0M
       str = format('%sM', FormatToDecimalsPlaces(v/1e6, digits or 1))
-    elseif v >= 1e6 then
+    elseif v >= 1e6 then    -- 1.00M
       str = format('%sM', FormatToDecimalsPlaces(v/1e6, digits or 2))
-    elseif v >= 100e3 then
+    elseif v >= 100e3 then  -- 100.0K
       str = format('%sK', FormatToDecimalsPlaces(v/1e3, digits or 1))
-    elseif v >= 1e3 then
+    elseif v >= 1e3 then    -- 1.00K
       str = format('%sK', FormatToDecimalsPlaces(v/1e3, digits or 2))
-    else
+    else                    -- 1
       str = format('%s', FormatToDecimalsPlaces(v, digits or 0))
     end
     if lower then
@@ -47,18 +47,31 @@ end
 -- Formats AP values. C for current values, N for needed values
 function dUI:formatAP(ap, kind)
   if kind:lower() == 'c' then
-    if ap >= 100e6 then
-      return dUI:ReadableNumber(ap, 0, true)
+    if ap >= 10e9 then
+      return dUI:ReadableNumber(ap, 1, true) -- 10.0b
+    elseif ap >= 1e9 then
+      return dUI:ReadableNumber(ap, 2, true) -- 1.00b
+    elseif ap >= 100e6 then
+      return dUI:ReadableNumber(ap, 0, true) -- 100m
+    elseif ap >= 10e6 then
+      return dUI:ReadableNumber(ap, 1, true) -- 10.0m
+    elseif ap >= 1e6 then
+      return dUI:ReadableNumber(ap, 2, true) -- 1.00m
+    elseif ap >= 100e3 then
+      return dUI:ReadableNumber(ap, 0, true) -- 100k
+    elseif ap >= 10e3 then
+      return dUI:ReadableNumber(ap, 1, true) -- 10.0k
     elseif ap >= 1e3 then
-      return dUI:ReadableNumber(ap, 1, true)
+      return dUI:ReadableNumber(ap, 2, true) -- 1.00k
     else
-      return dUI:ReadableNumber(ap, 0, true)
+      return dUI:ReadableNumber(ap, 0, true) -- 100
     end
   elseif kind:lower() == 'n' then
     if ap >= 1e9 then
-      return dUI:ReadableNumber(ap, 1, true)
-    elseif ap >= 100e6 then
-      return dUI:ReadableNumber(ap, 2, true)
+      return dUI:ReadableNumber(ap, 1, true) -- 1.0b
+    elseif ap >= 500e6 then
+      -- return dUI:ReadableNumber(ap, 0, true) -- 500m
+      return format('%sb', FormatToDecimalsPlaces(ap/1e9, 2)) -- 0.50b
     else
       return dUI:formatAP(ap, 'c')
     end
