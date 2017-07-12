@@ -1,5 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI) -- Imports
-local dUI = E:GetModule('dUI')
+local E, L, V, P, G = unpack(ElvUI)	-- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local dUI = E:GetModule('dUI')	-- Import dUI Core
 local DT = E:GetModule('DataTexts') -- Grab ElvUI DataTexts
 
 -- Cache Globals

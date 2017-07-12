@@ -1,5 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local dUI = E:GetModule('dUI')
+local E, L, V, P, G = unpack(ElvUI)	-- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local dUI = E:GetModule('dUI')	-- Import dUI Core
 
 --Cache global variables
 local select, tonumber, assert, type, unpack, pairs = select, tonumber, assert, type, unpack, pairs
