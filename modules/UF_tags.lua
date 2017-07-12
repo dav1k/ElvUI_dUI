@@ -1,5 +1,6 @@
 -- Insert Custom ElvUI tags for use in UnitFrames
 local E, L, V, P, G = unpack(ElvUI); -- Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local dUI = E:GetModule('dUI')
 
 -- Grab ElvUI's UnitFrames
 local UF = E:GetModule('UnitFrames');
@@ -130,7 +131,7 @@ ElvUF.Tags.Methods['healthcolor2'] = function(unit)
   end
 end
 
--- Displays (HP+Abs)% w/ nostatus tag
+-- Displays (HP+ABSORB):percent w/ nostatus tag
 ElvUF.Tags.Events['health-absorbs:percent-nostatus'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION'
 ElvUF.Tags.Methods['health-absorbs:percent-nostatus'] = function(unit)
   local absorb = UnitGetTotalAbsorbs(unit) or 0
@@ -153,27 +154,27 @@ ElvUF.Tags.Methods['health-absorbs:percent'] = function(unit)
   if status then
     return status
   else
-    return _TAGS['health-absorbs:percent'](unit)
+    return _TAGS['health-absorbs:percent-nostatus'](unit)
   end
 end
 
 -- Returns (HP+ABSORB):Current
-ElvUF.Tags.Events['health-with-absorbs:current-nostatus'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION'
-ElvUF.Tags.Methods['health-with-absorbs:current-nostatus'] = function(unit)
+ElvUF.Tags.Events['health-absorbs:current-nostatus'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION'
+ElvUF.Tags.Methods['health-absorbs:current-nostatus'] = function(unit)
   local absorb = UnitGetTotalAbsorbs(unit) or 0
   local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
 
   return dUI:ReadableNumber(healthTotalIncludingAbsorbs)
 end
 
-ElvUF.Tags.Events['health-with-absorbs:current'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION'
-ElvUF.Tags.Methods['health-with-absorbs:current'] = function(unit)
+ElvUF.Tags.Events['health-absorbs:current'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION'
+ElvUF.Tags.Methods['health-absorbs:current'] = function(unit)
   local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 
   if status then
     return status
   else
-    return _TAGS['health-with-absorbs:current-nostatus'](unit)
+    return _TAGS['health-absorbs:current-nostatus'](unit)
   end
 end
 
@@ -194,7 +195,7 @@ ElvUF.Tags.Methods['health-plus-absorbs:current'] = function(unit)
   if status then
     return status
   else
-    return _TAGS['health-absorbs:current-nostatus'](unit)
+    return _TAGS['health-plus-absorbs:current-nostatus'](unit)
   end
 end
 
