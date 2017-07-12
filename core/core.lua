@@ -101,3 +101,40 @@ function dUI:InitialString(str, allUpper)
   end
   return dUI:RemoveTrailingSpace(newStr)
 end
+
+-- Take first Inital or remove short words in string
+function dUI:RemoveShortWordsInString(str, length)
+  local newStr = ''
+  local wordLength = length or 3
+  local words = {split(' ', str)}
+  for i, word in pairs(words) do
+    if i ~= #words then
+      if word:utf8len() > wordLength then
+        word = utf8sub(word, 1, 1) .. '. '
+      else
+        word = ''
+      end
+    end
+    newStr = newStr .. word
+  end
+  return dUI:RemoveTrailingSpace(newStr)
+end
+
+-- Abbreviate String according to maxLength
+function dUI:ReadableString(str, maxLength)
+  local attempts = {
+    [0] = function(string) return string end,
+    [1] = function(string) return dUI:AbbreviateString(string, 2) end,
+    [2] = function(string) return dUI:AbbreviateString(string, 1) end,
+    [3] = function(string) return dUI:RemoveShortWordsInString(string, 3) end,
+    [4] = function(string) return dUI:RemoveVowels(dUI:AbbreviateString(string, 1)) end,
+    [5] = function(string) return dUI:InitialString(string) end
+  }
+  local index = 0
+  local currentAttempt = str
+  while ( index <= 5 and currentAttempt:utf8len() < maxLength) do
+    index = index + 1
+    currentAttempt = attempts[index](str)
+  end
+  return currentAttempt
+end
