@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+  <Script file="DT_infotexts.lua"/>
+  <Script file="DT_specs.lua"/>
+  <Script file="UF_tags.lua"/>
+</Ui>
