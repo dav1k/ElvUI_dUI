@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(ElvUI) --Inport: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local dUI = E:GetModule('dUI')
 
 --Cache global variables
 local select, tonumber, assert, type, unpack, pairs = select, tonumber, assert, type, unpack, pairs
@@ -122,6 +123,7 @@ end
 
 -- Abbreviate String according to maxLength
 function dUI:ReadableString(str, maxLength)
+  if not str then return end
   local attempts = {
     [0] = function(string) return string end,
     [1] = function(string) return dUI:AbbreviateString(string, 2) end,
@@ -132,7 +134,7 @@ function dUI:ReadableString(str, maxLength)
   }
   local index = 0
   local currentAttempt = str
-  while ( index <= 5 and currentAttempt:utf8len() < maxLength) do
+  while ( index <= 5 and currentAttempt:utf8len() > maxLength) do
     index = index + 1
     currentAttempt = attempts[index](str)
   end
