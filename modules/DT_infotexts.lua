@@ -1,6 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
+local dUI = E:GetModule('dUI')
 local DT = E:GetModule('DataTexts')
-local dBAR = E:GetModule('DataBars');
+local dBAR = E:GetModule('DataBars')
 
 -- Lua functions
 local _G = _G
@@ -107,7 +108,7 @@ end
 
 ----------------------------------------------------------
 -- [1] EXPERIENCE DATA
-local function update_ExperienceData(event, unit)
+function update_ExperienceData(event, unit)
   if UnitLevel('player') then
     ExperienceData.level = UnitLevel('player')
     ExperienceData.level_max = ExperienceData.level == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] and true or false
@@ -134,11 +135,11 @@ local function update_ExperienceData(event, unit)
   end
 end
 
-local function constructXPTooltip(self)
+function constructXPTooltip(self)
   DT:SetupTooltip(self)
 
   DT.tooltip:ClearLines()
-  Dt.tooltip:SetOwner(self, 'ANCHOR_CURSOR', 0, -4)
+  DT.tooltip:SetOwner(self, 'ANCHOR_CURSOR', 0, -4)
 
   DT.tooltip:AddLine(L["Experience"])
   DT.tooltip:AddLine(' ')
@@ -163,7 +164,7 @@ local function constructXPTooltip(self)
 end
 
 -- [2] ARTIFACT DATA
-local function update_ArtifactData(event, unit)
+function update_ArtifactData(event, unit)
   local Artifact_ItemID, _, _, _, Artifact_Power, Artifact_Rank, _, _, _, _, _, _, Artifact_Tier = C_ArtifactUIGetEquippedArtifactInfo()
 
   if Artifact_ItemID then
@@ -214,7 +215,7 @@ function constructArtifactTooltip(self)
 end
 
 -- [3] REPUTATION DATA
-local function update_ReputationData(event, unit)
+function update_ReputationData(event, unit)
   if GetWatchedFactionInfo() then
     local clrScale = 1.0
     local name, reaction, min, max, value, factionID = GetWatchedFactionInfo()
@@ -278,7 +279,7 @@ function constructReputationTooltip(self)
 end
 
 -- [4] HONOR DATA
-local function update_HonorData(event, unit)
+function update_HonorData(event, unit)
   if UnitHonor('player') then
     HonorData.XP = UnitHonor('player')
     HonorData.XPForNextLevel = UnitHonorMax('player')
@@ -326,7 +327,7 @@ end
 
 ----------------------------------------------------------
 
-function combined_OnEvent(self, event, unit)
+local function combined_OnEvent(self, event, unit)
   -- Refresh data
   update_ExperienceData(event, unit)
   update_ArtifactData(event, unit)
@@ -354,7 +355,7 @@ function combined_OnEvent(self, event, unit)
   displayText[displayIndex](self)
 end
 
-function combined_OnClick(self, button)
+local function combined_OnClick(self, button)
   if button == 'LeftButton' then
     actions[displayIndex]()
   elseif button == 'RightButton' then
@@ -367,7 +368,7 @@ function combined_OnClick(self, button)
   end
 end
 
-function combined_OnEnter(self)
+local function combined_OnEnter(self)
   tooltips[displayIndex](self)
 end
 
@@ -394,18 +395,18 @@ DT:RegisterDatatext('Combined Data (dUI)',
 combined_OnEvent, nil, combined_OnClick, combined_OnEnter)
 
 ----------------------------------------------------------
-function exp_OnEvent(self, event, unit)
+local function exp_OnEvent(self, event, unit)
   update_ExperienceData(event, unit)
   displayText[1](self)
 end
 
-function exp_OnClick(self, button)
+local function exp_OnClick(self, button)
   if button == 'LeftButton' or button == 'RightButton' then
     actions[1]()
   end
 end
 
-function exp_OnEnter(self)
+local function exp_OnEnter(self)
   tooltips[1](self)
 end
 
@@ -421,18 +422,18 @@ DT:RegisterDatatext('Experience (dUI)',
 exp_OnEvent, nil, exp_OnClick, exp_OnEnter)
 
 ----------------------------------------------------------
-function artifact_OnEvent(self, event, unit)
+local function artifact_OnEvent(self, event, unit)
   update_ArtifactData(event, unit)
   displayText[2](self)
 end
 
-function artifact_OnClick(self, button)
+local function artifact_OnClick(self, button)
   if button == 'LeftButton' or button =='RightButton' then
     actions[2]()
   end
 end
 
-function artifact_OnEnter(self)
+local function artifact_OnEnter(self)
   tooltips[2](self)
 end
 
@@ -447,18 +448,18 @@ DT:RegisterDatatext('Artifact Power (dUI)',
 artifact_OnEvent, nil, artifact_OnClick, artifact_OnEnter)
 
 ----------------------------------------------------------
-function rep_OnEvent(self, event, unit)
+local function rep_OnEvent(self, event, unit)
   update_ReputationData(event, unit)
   displayText[3](self)
 end
 
-function rep_OnClick(self, button)
+local function rep_OnClick(self, button)
   if button == 'LeftButton' or button == 'RightButton' then
     actions[3]()
   end
 end
 
-function rep_OnEnter(self)
+local function rep_OnEnter(self)
   tooltips[3](self)
 end
 
@@ -470,18 +471,18 @@ DT:RegisterDatatext('Reputation (dUI)',
 },
 rep_OnEvent, nil, rep_OnClick, rep_OnEnter)
 ----------------------------------------------------------
-function honor_OnEvent(self, event, unit)
+local function honor_OnEvent(self, event, unit)
   update_HonorData(event, unit)
   displayText[4](self)
 end
 
-function honor_OnClick(self, button)
+local function honor_OnClick(self, button)
   if button == 'LeftButton' or button == 'RightButton' then
     actions[4]()
   end
 end
 
-function honor_OnEnter(self)
+local function honor_OnEnter(self)
   tooltips[4](self)
 end
 
