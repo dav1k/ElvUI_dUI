@@ -254,7 +254,7 @@ function update_ReputationData(event, unit)
       end
     end
 
-    ReputationData.dText = format('%s%s|r: %0.1f%% [%s%s|r]', ReputationData.color, dUI:ReadableString(ReputationData.name, 15), ReputationData.percent, ReputationData.color, ReputationData.isParagon and 'P+' or abbreviateStanding(ReputationData.standingLabel))
+    ReputationData.dText = format('%s%s|r: %0.1f%% [%s%s|r]', ReputationData.color, dUI:ReadableString(ReputationData.name, 12), ReputationData.percent, ReputationData.color, ReputationData.isParagon and 'P+' or abbreviateStanding(ReputationData.standingLabel))
 
   else
     ReputationData.dText = 'No Faction'
