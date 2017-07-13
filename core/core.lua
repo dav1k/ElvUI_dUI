@@ -80,7 +80,7 @@ end
 
 -- Remove Trailing Spaces from string
 function dUI:RemoveTrailingSpace(str)
-  return str:gsub("^%s*(.-)%s*$", "%1")
+  return str:gsub('%s%.',''):gsub("^%s*(.-)%s*$", "%1")
 end
 
 -- Remove Vowels from string
