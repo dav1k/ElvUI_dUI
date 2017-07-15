@@ -7,11 +7,6 @@ local tinsert, tremove = tinsert, tremove
 local atan2, modf, ceil, floor, abs, sqrt, mod = math.atan2, math.modf, math.ceil, math.floor, math.abs, math.sqrt, mod
 local format, sub, match, upper, split, utf8sub = string.format, string.sub, string.match, string.upper, string.split, string.utf8sub
 
--- Format number to a specific manitude of precision
-local function FormatToDecimalsPlaces(num, digits)
-  local value = ("%%.%df"):format(digits)
-  return value:format(num)
-end
 -- Format Number String with comma seperated thousands and rounded to decimals
 local function FormatNumberString(number, decimal)
   local nFormat, nRound, nStr, nSplit
