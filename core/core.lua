@@ -16,6 +16,8 @@ end
 
 -- Returns shorted/abbreviated values (usually for UFs)
 function dUI:ReadableNumber(v, digits, lower)
+  digits = digits or false
+  lower = lower and true or false
   if not v then
     return 0
 	else
@@ -46,7 +48,8 @@ end
 
 -- Formats AP values. C for current values, N for needed values
 function dUI:formatAP(ap, kind)
-  if kind:lower() == 'c' then
+  kind = kind:lower() or 'c'
+  if kind == 'c' then
     if ap >= 10e9 then
       return dUI:ReadableNumber(ap, 1, true) -- 10.0b
     elseif ap >= 1e9 then
@@ -66,7 +69,7 @@ function dUI:formatAP(ap, kind)
     else
       return dUI:ReadableNumber(ap, 0, true) -- 100
     end
-  elseif kind:lower() == 'n' then
+  elseif kind == 'n' then
     if ap >= 1e9 then
       return dUI:ReadableNumber(ap, 1, true) -- 1.0b
     elseif ap >= 500e6 then
@@ -85,6 +88,7 @@ end
 
 -- Remove Vowels from string
 function dUI:RemoveVowels(str, uppers)
+  uppers = uppers and true or false
   if uppers then
     return str:gsub("[AEIOUaeiou]", '')
   else
@@ -96,7 +100,8 @@ end
 -- [1]: 'Jack Jacksmith Jackson' => 'J.J. Jackson'
 -- [2]: 'Jack Jacksmith Jackson' => 'Ja. Ja. Jackson'
 function dUI:AbbreviateString(str, type)
-  if type == nil or type == 1 then
+  type = type or 1
+  if type == 1 then
     return str:gsub("%s?(.[\128-\191*]*)%S+%s", "%1. ")
   elseif type == 2 then
     return str:gsub("%s?(..[\128-\191]*)%S+%s", "%1. ")
@@ -106,6 +111,7 @@ end
 -- Return String as inital letters of each word
 -- 'Jack Jacksmith Jackson' => 'J. J. J.'
 function dUI:InitialString(str, allUpper)
+  allUpper = allUpper and true or false
   local newStr = ''
   local words = {split(' ', str)}
   for _, word in pairs(words) do
