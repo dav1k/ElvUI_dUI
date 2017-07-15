@@ -12,7 +12,19 @@ local function FormatToDecimalsPlaces(num, digits)
   local value = ("%%.%df"):format(digits)
   return value:format(num)
 end
+-- Format Number String with comma seperated thousands and rounded to decimals
+local function FormatNumberString(number, decimal)
+  local nFormat, nRound, nStr, nSplit
+  decimal = decimal or 2
 
+  nRound = abs(E:Round(number, decimal))
+  nFormat = ('%%.%df'):format(decimal):format(nRound)
+  nSplit = {match(nFormat, '^([^%d]*%d)(%d*)(.-)$')}
+
+  nStr = nSplit[1]..(nSplit[2]:reverse():gsub('(%d%d%d)','%1,'):reverse())..nSplit[3]
+
+  return nStr
+end
 
 -- Returns shorted/abbreviated values (usually for UFs)
 function dUI:ReadableNumber(v, digits, lower)
@@ -23,20 +35,22 @@ function dUI:ReadableNumber(v, digits, lower)
 	else
     v = abs(v)
     local str = ''
-    if v >= 100e9 then      -- 100.0B
-      str = format('%sB', FormatToDecimalsPlaces(v/1e9, digits or 1))
-    elseif v >= 1e9 then    -- 1.00B
-      str = format('%sB', FormatToDecimalsPlaces(v/1e9, digits or 2))
-    elseif v >= 100e6 then  -- 100.0M
-      str = format('%sM', FormatToDecimalsPlaces(v/1e6, digits or 1))
-    elseif v >= 1e6 then    -- 1.00M
-      str = format('%sM', FormatToDecimalsPlaces(v/1e6, digits or 2))
-    elseif v >= 100e3 then  -- 100.0K
-      str = format('%sK', FormatToDecimalsPlaces(v/1e3, digits or 1))
-    elseif v >= 1e3 then    -- 1.00K
-      str = format('%sK', FormatToDecimalsPlaces(v/1e3, digits or 2))
-    else                    -- 1
-      str = format('%s', FormatToDecimalsPlaces(v, digits or 0))
+    if v >= 100e9 then      -- 100.0B+
+      str = format('%sB', FormatNumberString(v/1e9, digits or 1))
+    elseif v >= 10e9 then   -- 10.00B-99.99B
+      str = format('%sB', FormatNumberString(v/1e9, digits or 2))
+    elseif v >= 1e9 then    -- 1.000B-9.999B
+      str = format('%sB', FormatNumberString(v/1e9, digits or 3))
+    elseif v >= 100e6 then  -- 100.0M-999.9M
+      str = format('%sM', FormatNumberString(v/1e6, digits or 1))
+    elseif v >= 10e6 then   -- 10.00M-99.99M
+      str = format('%sM', FormatNumberString(v/1e6, digits or 2))
+    elseif v >= 1e6 then    -- 1.000M-9.999M
+      str = format('%sM', FormatNumberString(v/1e6, digits or 3))
+    elseif v >= 100e3 then  -- 100.0K-999.9K
+      str = format('%sK', FormatNumberString(v/1e3, digits or 1))
+    else                    -- 0-99,999
+      str = format('%s', FormatNumberString(v, 0))
     end
     if lower then
       return str:lower()
@@ -74,7 +88,7 @@ function dUI:formatAP(ap, kind)
       return dUI:ReadableNumber(ap, 1, true) -- 1.0b
     elseif ap >= 500e6 then
       -- return dUI:ReadableNumber(ap, 0, true) -- 500m
-      return format('%sb', FormatToDecimalsPlaces(ap/1e9, 2)) -- 0.50b
+      return format('%sb', FormatNumberString(ap/1e9, 2)) -- 0.50b
     else
       return dUI:formatAP(ap, 'c')
     end
