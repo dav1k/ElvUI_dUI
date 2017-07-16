@@ -158,10 +158,9 @@ function dUI:ReadableString(str, maxLength)
     [6] = function(string) return dUI:InitialString(string) end
   }
   local index = 0
-  local currentAttempt = attempts[index](str)
-  while ( index <= #attempts and currentAttempt:utf8len() > maxLength) do
-    index = index + 1
+  repeat
     currentAttempt = attempts[index](str)
-  end
+    index = index + 1
+  until (index == #attempts or currentAttempt:utf8len() <= maxLength)
   return currentAttempt
 end
