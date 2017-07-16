@@ -340,7 +340,7 @@ local function combined_OnEvent(self, event, unit)
     -- print(format('Event Switch XP: %s', event))
     displayIndex = ExperienceData.level_max and 2 or 1
   elseif event == 'PLAYER_XP_UPDATE' or event == 'DISABLE_XP_GAIN' or event == 'ENABLE_XP_GAIN' then
-    print(format('Event Switch XP: %s', event))
+    -- print(format('Event Switch XP: %s', event))
     displayIndex = 1
   elseif event == 'ARTIFACT_XP_UPDATE' then
     -- print(format('Event Switch AP: %s', event))
