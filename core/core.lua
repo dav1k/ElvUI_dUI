@@ -96,13 +96,9 @@ function dUI:RemoveTrailingSpace(str)
 end
 
 -- Remove Vowels from string
-function dUI:RemoveVowels(str, uppers)
-  uppers = uppers and true or false
-  if uppers then
-    return str:gsub("[AEIOUaeiou]", '')
-  else
-    return str:gsub("[aeiou]", '')
-  end
+function dUI:RemoveVowels(str, upperCase)
+  local sub = upperCase and '[AEIOUaeiou]' or '[aeiou]'
+  return format('%s', str:gsub(sub, ''))
 end
 
 -- Return Str such preceeding spaced words are changed to letter and period.
