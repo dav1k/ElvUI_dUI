@@ -153,8 +153,8 @@ function dUI:ReadableString(str, maxLength)
     [1] = function(string) return dUI:AbbreviateString(string, 2) end,
     [2] = function(string) return dUI:AbbreviateString(string, 1) end,
     [3] = function(string) return dUI:RemoveShortWordsInString(string, 3) end,
-    [4] = function(string) return dUI:RemoveTrailingSpace(dUI:AbbreviateString(string, 1):gsub("[aeiou]", '')) end,
     [5] = function(string) return dUI:InitialString(string) end
+    [4] = function(string) return dUI:RemoveTrailingSpace(dUI:RemoveVowels(dUI:AbbreviateString(string, 1))) end,
   }
   local index = 0
   local currentAttempt = str
