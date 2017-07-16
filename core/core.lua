@@ -92,7 +92,7 @@ end
 
 -- Remove Trailing Spaces from string
 function dUI:RemoveTrailingSpace(str)
-  return str:gsub('%s%.',''):gsub("^%s*(.-)%s*$", "%1")
+  return format('%s', str:gsub('%s%.',''):gsub("^%s*(.-)%s*$", "%1"))
 end
 
 -- Remove Vowels from string
@@ -107,9 +107,9 @@ end
 function dUI:AbbreviateString(str, type)
   type = type or 1
   if type == 1 then
-    return str:gsub("%s?(.[\128-\191*]*)%S+%s", "%1. ")
+    return format('%s', str:gsub("%s?(.[\128-\191*]*)%S+%s", "%1. "))
   elseif type == 2 then
-    return str:gsub("%s?(..[\128-\191]*)%S+%s", "%1. ")
+    return format('%s', str:gsub("%s?(..[\128-\191]*)%S+%s", "%1. "))
   end
 end
 
