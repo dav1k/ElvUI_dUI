@@ -153,12 +153,13 @@ function dUI:ReadableString(str, maxLength)
     [1] = function(string) return dUI:AbbreviateString(string, 2) end,
     [2] = function(string) return dUI:AbbreviateString(string, 1) end,
     [3] = function(string) return dUI:RemoveShortWordsInString(string, 3) end,
-    [5] = function(string) return dUI:InitialString(string) end
     [4] = function(string) return dUI:RemoveTrailingSpace(dUI:RemoveVowels(dUI:AbbreviateString(string, 1))) end,
+    [5] = function(string) return dUI:RemoveTrailingSpace(dUI:RemoveVowels(dUI:RemoveShortWordsInString(string, 3))) end,
+    [6] = function(string) return dUI:InitialString(string) end
   }
   local index = 0
-  local currentAttempt = str
-  while ( index <= 5 and currentAttempt:utf8len() > maxLength) do
+  local currentAttempt = attempts[index](str)
+  while ( index <= #attempts and currentAttempt:utf8len() > maxLength) do
     index = index + 1
     currentAttempt = attempts[index](str)
   end
