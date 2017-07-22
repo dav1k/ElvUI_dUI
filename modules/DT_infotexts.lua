@@ -350,7 +350,7 @@ local function combined_OnEvent(self, event, unit)
     displayIndex = 3
   elseif event == 'HONOR_XP_UPDATE' or event == 'HONOR_PRESTIGE_UPDATE' then
     -- print(format('Event Switch PvP: %s', event))
-    displayIndex = 4
+    displayIndex = ExperienceData.level_max and 4 or 1
   end
   displayText[displayIndex](self)
 end
@@ -360,7 +360,9 @@ local function combined_OnClick(self, button)
     actions[displayIndex]()
   elseif button == 'RightButton' then
     displayIndex = displayIndex + 1
-    if displayIndex == 5 then
+    if not ExperienceData.level_max and displayIndex == 4 then
+      displayIndex = 1
+    elseif displayIndex == 5 then
       displayIndex = 1
     end
     tooltips[displayIndex](self)
