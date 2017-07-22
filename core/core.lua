@@ -82,7 +82,6 @@ function dUI:formatAP(ap, kind)
     if ap >= 1e9 then
       return dUI:ReadableNumber(ap, 1, true) -- 1.0b
     elseif ap >= 500e6 then
-      -- return dUI:ReadableNumber(ap, 0, true) -- 500m
       return format('%sb', FormatNumberString(ap/1e9, 2)) -- 0.50b
     else
       return dUI:formatAP(ap, 'c')
