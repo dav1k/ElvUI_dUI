@@ -23,8 +23,6 @@ end
 
 -- Returns shorted/abbreviated values (usually for UFs)
 function dUI:ReadableNumber(v, digits, lower)
-  digits = digits or false
-  lower = lower and true or false
   if not v then
     return 0
 	else
