@@ -146,11 +146,11 @@ function constructXPTooltip(self)
 
   if not ExperienceData.level_max then
     DT.tooltip:AddDoubleLine(L["Current Level:"], format(' %d', ExperienceData.level), 1, 1, 1)
-    DT.tooltip:AddDoubleLine(L["XP:"], format(' %d / %d (%.2f%%)', ExperienceData.XP, ExperienceData.XPForNextLevel, ExperienceData.XP_percent), 1, 1, 1)
-    DT.tooltip:AddDoubleLine(L["Remaining:"], format(' %d (%.2f%% - %.1f %s)', ExperienceData.XP_rem, ExperienceData.XP_remPercent, ExperienceData.XP_remBars, L["Bars"]), 1, 1, 1)
+    DT.tooltip:AddDoubleLine(L["XP:"], format(' %s / %s (%.2f%%)', BreakUpLargeNumbers(ExperienceData.XP), BreakUpLargeNumbers(ExperienceData.XPForNextLevel), ExperienceData.XP_percent), 1, 1, 1)
+    DT.tooltip:AddDoubleLine(L["Remaining:"], format(' %s (%.2f%% - %.1f %s)', BreakUpLargeNumbers(ExperienceData.XP_rem), ExperienceData.XP_remPercent, ExperienceData.XP_remBars, L["Bars"]), 1, 1, 1)
 
     if ExperienceData.XP_rested > 0 then
-      DT.tooltip:AddDoubleLine(L["Rested:"], format('+%d (%.2f%%)', ExperienceData.XP_rested, ExperienceData.XP_restedPercent), 1, 1, 1)
+      DT.tooltip:AddDoubleLine(L["Rested:"], format('+%s (%.2f%%)', BreakUpLargeNumbers(ExperienceData.XP_rested), ExperienceData.XP_restedPercent), 1, 1, 1)
     end
   else
     DT.tooltip:AddDoubleLine(L["Current Level:"], format(' %d (Level Cap)', ExperienceData.level), 1, 1, 1)
@@ -200,7 +200,7 @@ function constructArtifactTooltip(self)
 
   if ArtifactData.ItemID then
     DT.tooltip:AddDoubleLine(L['AP:'], format(' %s / %s (%.2f%%)', BreakUpLargeNumbers(ArtifactData.XP), BreakUpLargeNumbers(ArtifactData.XPForNextPoint), ArtifactData.XP_percent))
-    DT.tooltip:AddDoubleLine(L['Remaining:'], format(' %s (%.2f%% - %.1f %s)', BreakUpLargeNumbers(ArtifactData.XP_rem), BreakUpLargeNumbers(ArtifactData.XP_remPercent), BreakUpLargeNumbers(ArtifactData.XP_remBars), L["Bars"] ), 1, 1, 1)
+    DT.tooltip:AddDoubleLine(L['Remaining:'], format(' %s (%.2f%% - %.1f %s)', BreakUpLargeNumbers(ArtifactData.XP_rem), ArtifactData.XP_remPercent, ArtifactData.XP_remBars, L["Bars"] ), 1, 1, 1)
     DT.tooltip:AddDoubleLine(L["In Bags:"], format(' %s (%.2f%% - %.1f %s)', BreakUpLargeNumbers(ArtifactData.XPInBags), ArtifactData.XPInBags_percent, ArtifactData.XPInBags_bars, L["Bars"]), 1, 1, 1)
 
     if ArtifactData.AvailablePoints >= 1 then
