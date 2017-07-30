@@ -104,9 +104,9 @@ end
 function dUI:AbbreviateString(str, type)
   type = type or 1
   if type == 1 then
-    return format('%s', str:gsub("%s?(.[\128-\191*]*)%S+%s", "%1. "))
+    return format('%s', str:gsub('([%a\128-\191])%S+%s', '%1. '))
   elseif type == 2 then
-    return format('%s', str:gsub("%s?(..[\128-\191]*)%S+%s", "%1. "))
+    return format('%s', str:gsub('([%a\128-\191][%a\128-\191])%S+%s', '%1. '))
   end
 end
 
