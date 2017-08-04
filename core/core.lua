@@ -156,7 +156,7 @@ function dUI:ReadableString(str, maxLength)
   }
   local index = 0
   repeat
-    currentAttempt = attempts[index](str)
+    currentAttempt = dUI:RemoveTrailingSpace(attempts[index](str))
     index = index + 1
   until (index == #attempts or currentAttempt:utf8len() <= maxLength)
   return currentAttempt
