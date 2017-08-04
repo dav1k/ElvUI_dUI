@@ -165,14 +165,36 @@ end
 -- Abbreviate String according to maxLength
 function dUI:ReadableString(str, maxLength)
   if not str then return end
-  local attempts = {
+  attempts = {
     [0] = function(string) return string end,
-    [1] = function(string) return dUI:AbbreviateString(string, 2) end,
-    [2] = function(string) return dUI:AbbreviateString(string, 1) end,
-    [3] = function(string) return dUI:RemoveShortWordsInString(string, 3) end,
-    [4] = function(string) return dUI:RemoveTrailingSpace(dUI:RemoveVowels(dUI:AbbreviateString(string, 1))) end,
-    [5] = function(string) return dUI:RemoveTrailingSpace(dUI:RemoveVowels(dUI:RemoveShortWordsInString(string, 3))) end,
-    [6] = function(string) return dUI:InitialString(string) end
+    [1] = function(string)
+      local s = dUI:RemoveArticles(string)
+      return s
+    end,
+    [2] = function(string)
+      local s = attempts[1](string)
+      return dUI:RemoveShortWordsInString(s, 3)
+    end,
+    [3] = function(string)
+      local s = attempts[1](string)
+      return dUI:AbbreviateString(s, 2)
+    end,
+    [4] = function(string)
+      local s = attempts[2](string)
+      return dUI:AbbreviateString(s, 2)
+    end,
+    [5] = function(string)
+      local s = dUI:RemoveVowels(attempts[1](string))
+      return dUI:AbbreviateString(s, 2)
+    end,
+    [6] = function(string)
+      local s = dUI:RemoveVowels(attempts[1](string))
+      return dUI:AbbreviateString(s, 1)
+    end,
+    [7] = function(string)
+      local s = attempts[1](string)
+      return dUI:InitialString(s)
+    end,
   }
   local index = 0
   repeat
