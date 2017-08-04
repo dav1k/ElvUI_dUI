@@ -98,6 +98,26 @@ function dUI:RemoveVowels(str, upperCase)
   return format('%s', str:gsub(sub, ''))
 end
 
+-- Remove articles from string (ie 'the', 'of', etc)
+-- Ex: 'Knights of the Ebon Blade' => 'Knights Ebon Blade'
+function dUI:RemoveArticles(str)
+  local replace = {
+    ['The'] = '',
+    ['the'] = '',
+    ['A'] = '',
+    ['a'] = '',
+    ['An'] = '',
+    ['an'] = '',
+    ['Of'] = '',
+    ['of'] = '',
+  }
+  return string.gsub(str, '%s?(%a+)%s?',
+    function(s)
+      return replace[s]
+    end
+  )
+end
+
 -- Return Str such preceeding spaced words are changed to letter and period.
 -- [1]: 'Jack Jacksmith Jackson' => 'J.J. Jackson'
 -- [2]: 'Jack Jacksmith Jackson' => 'Ja. Ja. Jackson'
