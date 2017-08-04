@@ -124,7 +124,7 @@ function dUI:InitialString(str, allUpper)
   return dUI:RemoveTrailingSpace(newStr)
 end
 
--- Take first Inital or remove short words in string
+-- Remove short words in string
 function dUI:RemoveShortWordsInString(str, length)
   local newStr = ''
   local wordLength = length or 3
@@ -132,7 +132,7 @@ function dUI:RemoveShortWordsInString(str, length)
   for i, word in pairs(words) do
     if i ~= #words then
       if word:utf8len() > wordLength then
-        word = utf8sub(word, 1, 1) .. '. '
+        word = word .. ' '
       else
         word = ''
       end
