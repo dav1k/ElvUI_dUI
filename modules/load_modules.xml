@@ -2,4 +2,5 @@
   <Script file="DT_infotexts.lua"/>
   <Script file="DT_specs.lua"/>
   <Script file="UF_tags.lua"/>
+  <Script file="UT_macro.lua"/>
 </Ui>
